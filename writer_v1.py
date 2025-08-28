@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import scrolledtext
 import threading
 
-# --- LangChain Setup ---
-# We keep the core LangChain components but adapt the prompt
 from langchain_core.prompts import PromptTemplate
 from langchain_ollama.llms import OllamaLLM
+
+from tts import talk
 
 # 1. THE PROMPT TEMPLATE IS THE BIGGEST CHANGE
 # We are no longer treating this as a chat. We are giving the AI a single block of text
@@ -84,6 +84,8 @@ class CollaborativeWriterApp:
 
             # Schedule the GUI update to run on the main thread
             self.root.after(0, self.update_text_area, ai_response)
+            
+            talk(ai_response)
         
         except Exception as e:
             error_message = f"\n\n--- ERROR ---\nCould not get response from AI: {e}\n"
